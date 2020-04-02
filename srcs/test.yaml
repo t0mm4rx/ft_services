@@ -30,8 +30,8 @@ spec:
         app: test
     spec:
       containers:
-      - name: number
-        image: number
+      - name: test
+        image: service_test
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
