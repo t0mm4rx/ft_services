@@ -1,1 +1,2 @@
 FTP: user/password
+MySQL: root/password
