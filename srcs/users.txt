@@ -1,2 +1,3 @@
 FTP: user/password
-MySQL: root/password
+MySQL: user/password
+SSH: user/password

@@ -19,6 +19,8 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY start.sh ./start.sh
 COPY index.html /www/index.html
 
+RUN echo 'SSH of ft_services by tmarx' > /etc/motd
+
 CMD sh ./start.sh
 
 EXPOSE 80

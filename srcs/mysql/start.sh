@@ -1,39 +1,13 @@
 #!/bin/sh
 
-if [ ! -d /app/mysql/mysql ]
-then
-	echo Creating initial database...
-	mysql_install_db --user=root > /dev/null
-	echo Done!
-fi
+mysql_install_db --user=user
+tmp=sql_tmp
 
-if [ ! -d /run/mysqld ]
-then
-	mkdir -p /run/mysqld
-fi
+echo -ne "FLUSH PRIVILEGES;\n
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;\n
+FLUSH PRIVILEGES;\n" >> $tmp 
 
-tfile=`mktemp`
-if [ ! -f "$tfile" ]
-then
-	echo Cannot create temp file!
-	exit 1
-fi
+/usr/bin/mysqld --user=user --bootstrap --verbose=0 < $tmp
+rm -rf $tmp
 
-echo Root password is password
-
-cat << EOF > $tfile
-FLUSH PRIVILEGES;
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY "password" WITH GRANT OPTION;
-EOF
-
-echo Bootstraping...
-if ! /usr/bin/mysqld --user=root --bootstrap --verbose=0 < $tfile
-then
-	echo Cannot bootstrap mysql!
-	exit 1
-fi
-rm -f $tfile
-echo Bootstraping done!
-
-echo Launching mysql server!
-exec /usr/bin/mysqld --user=root --console
+exec /usr/bin/mysqld --user=user

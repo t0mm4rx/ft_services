@@ -14,6 +14,8 @@ spec:
   - port: 443
     name: https
   - port: 22
+    nodePort: 22
+    targetPort: 22
     name: ssh
 
 ---

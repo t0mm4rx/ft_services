@@ -3,5 +3,5 @@ user = root
 datadir = /app/mysql
 port = 3306
 log-bin = /app/mysql/mysql-bin
-bind-address = 0.0.0.0
+bind-address = ---IP---
 skip-networking = false

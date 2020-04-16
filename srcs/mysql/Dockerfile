@@ -1,18 +1,15 @@
 FROM alpine
 
-ARG IP
-RUN echo ${IP}
-RUN echo ${IP} > ip.txt
+COPY install.sh install.sh
+COPY start.sh start.sh
 
-RUN apk update
-RUN apk add openrc --no-cache
-RUN apk add mysql mysql-client
+RUN sh install.sh 
 
-COPY ./start.sh ./start.sh
-COPY ./mysql.cnf /etc/mysql/my.cnf
+#COPY srcs/telegraf.conf /etc/telegraf.conf
+COPY my.cnf /etc/mysql/my.cnf
 
-RUN mkdir /app
-
-ENTRYPOINT sh ./start.sh
+#VOLUME ["/var/lib/mysql"]
 
 EXPOSE 3306
+
+ENTRYPOINT sh start.sh
