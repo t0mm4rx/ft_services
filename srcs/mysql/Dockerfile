@@ -1,15 +1,23 @@
-FROM alpine
+  # FROM Image : alpine
+FROM alpine:latest
 
-COPY install.sh install.sh
-COPY start.sh start.sh
+# VOLUME /var/run/docker.sock:/var/run/docker.sock
 
-RUN sh install.sh 
+# Installation
+RUN apk update \
+&& apk add mariadb mariadb-client && apk add --no-cache --upgrade bash \
+&& rm -rf /var/cache/apk/*
 
-#COPY srcs/telegraf.conf /etc/telegraf.conf
-COPY my.cnf /etc/mysql/my.cnf
+# Copy initialisation script
+COPY ./init_docker.sh .
+COPY ./init_mysql.sh .
+COPY wp.sql .
 
-#VOLUME ["/var/lib/mysql"]
+# Add permission
+RUN chmod 777 init_docker.sh
+RUN chmod 777 init_mysql.sh
 
 EXPOSE 3306
 
-ENTRYPOINT sh start.sh
+# Start configuration script
+ENTRYPOINT [ "./init_docker.sh" ]

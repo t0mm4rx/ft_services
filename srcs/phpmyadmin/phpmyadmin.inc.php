@@ -36,7 +36,7 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 /**
  * Variable definition
  */
-$cfg['Servers'][$i]['host'] = "---IP---";
+$cfg['Servers'][$i]['host'] = "mysql-service";
 $cfg['Servers'][$i]['port'] = "3306";
 $cfg['Servers'][$i]['user'] = "user";
 $cfg['Servers'][$i]['password'] = "password";

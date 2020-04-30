@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  type: NodePort
+  ports:
+  - port: 8086
+    nodePort: 8086
+    protocol: TCP
+    name: http
+  selector:
+    app: influxdb
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: service_influxdb
+        ports:
+        - containerPort: 8086
+        imagePullPolicy: Never

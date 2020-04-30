@@ -21,6 +21,7 @@ docker build -t service_ftps --build-arg IP=${IP} ./srcs/ftps
 docker build -t service_mysql ./srcs/mysql --build-arg IP=${IP}
 docker build -t service_wordpress ./srcs/wordpress --build-arg IP=${IP}
 docker build -t service_phpmyadmin ./srcs/phpmyadmin --build-arg IP=${IP}
+docker build -t service_influxdb ./srcs/influxdb
 
 echo "Creating pods and services..."
 kubectl create -f ./srcs/

@@ -21,20 +21,16 @@ foreach ($vars as $var) {
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-if (!empty($_ENV['DB_NAME']))
-	define( 'DB_NAME', 'wordpress' );
+define( 'DB_NAME', 'wordpress' );
 
 /** MySQL database username */
-if (!empty($_ENV['DB_USER']))
-	define( 'DB_USER', 'root' );
+define( 'DB_USER', 'user' );
 
 /** MySQL database password */
-if (!empty($_ENV['DB_PASSWORD']))
-	define( 'DB_PASSWORD', 'password' );
+define( 'DB_PASSWORD', 'password' );
 
 /** MySQL hostname */
-if (!empty($_ENV['DB_HOST']))
-	define( 'DB_HOST', 'AAAIPAAA' );
+define( 'DB_HOST', 'mysql-service' );
 
 define('WP_HOME', 'http://AAAIPAAA:5050' );
 define('WP_SITEURL', 'http://AAAIPAAA:5050' );
