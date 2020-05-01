@@ -1,38 +1,38 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: influxdb-service
+  name: grafana
   labels:
-    app: influxdb
+    app: grafana
 spec:
   type: NodePort
   ports:
-  - port: 8086
-    nodePort: 8086
+  - port: 3000
+    nodePort: 3000
     protocol: TCP
     name: http
   selector:
-    app: influxdb
+    app: grafana
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: influxdb
+  name: grafana
   labels:
-    app: influxdb
+    app: grafana
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: influxdb
+      app: grafana
   template:
     metadata:
       labels:
-        app: influxdb
+        app: grafana
     spec:
       containers:
-      - name: influxdb
-        image: service_influxdb
+      - name: grafana
+        image: service_grafana
         ports:
-        - containerPort: 8086
+        - containerPort: 3000
         imagePullPolicy: Never

@@ -10,11 +10,16 @@ RUN wget https://wordpress.org/latest.tar.gz \
 && mv wordpress/* /www \
 && rm -rf /var/cache/apk/*
 
+RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
+
 COPY wp-config.php /www/wp-config.php
 #RUN sed 's/AAAIPAAA/127.0.0.1/g' /www/wp-config.php > /www/wp-config.php
 RUN echo $IP > ip.txt
 
 COPY start.sh .
+
+RUN mkdir -p /etc/telegraf
+COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
 RUN chmod +x start.sh
 

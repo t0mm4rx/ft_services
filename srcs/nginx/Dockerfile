@@ -5,6 +5,7 @@ RUN apk add openrc --no-cache
 RUN apk add openssh
 RUN apk add openssl
 RUN apk add nginx
+RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 RUN adduser -D -g 'www' www
 RUN mkdir /www
 RUN chown -R www:www /var/lib/nginx
@@ -18,6 +19,8 @@ RUN yes "" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ss
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY start.sh ./start.sh
 COPY index.html /www/index.html
+RUN mkdir -p /etc/telegraf
+COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
 RUN echo 'SSH of ft_services by tmarx' > /etc/motd
 
