@@ -1,5 +1,7 @@
 # ft_services
 
+> :warning: **Warning**: Don't copy/paste code you don't understand: it's bad for you, and for the school. I have put my login in a lot of files to encourage you doing your own version. Have fun !
+
 42 cursus project, about kubernetes and docker.
 
 ## Introduction (will save you some time !)
