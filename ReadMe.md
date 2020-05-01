@@ -36,6 +36,12 @@ docker run -it debian:apache -p80:80
 # See all images
 docker images
 
+# See running containers
+docker ps
+
+# Stop a container
+docker kill <container ID>
+
 # Delete all unused Docker images and cache and free SO MUCH SPACE on your computer
 docker system prune
 ```
@@ -89,6 +95,22 @@ curl http://test:1000
 # Access the webpage from outside (your computer, remotely)
 curl http://192.168.0.1:1000
 ```
+
+### Link Minikube and Docker 🔗
+
+Minikube creates a specific VM in VirtualBox that will run your Docker images. **You need to link your shell with the Minikube context**.
+You can achieve that with the command:
+```sh
+eval $(minikube docker-env)
+```
+You can test in which context you are by running:
+```sh
+docker images
+```
+You'll see every images, that can help you identify were you are.
+
+**By default, Kubernetes deployments looks for online Docker images, we want it to load our custom local images**.
+You can do that by adding "imagePullPolicy: Never" prop in your container object.
 
 ## Containers 🧑‍💻
 
@@ -145,3 +167,9 @@ To provide an already-configured version of Grafana, I advise you to setup a bla
 Tom Marx
 **tmarx** on the intra and slack :)
 
+## To Do 🎯
+- [ ] FTP welcome message
+- [ ] Add login in telegraf.conf files
+- [ ] MySQL two files, better understanding and cleanup
+- [ ] JS animation, link to website in Nginx homepage
+- [ ] Persistancy

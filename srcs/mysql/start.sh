@@ -1,7 +1,7 @@
-#! /bin/bash
-
+#!/bin/ash
+#nohup ./init_mysql.sh > /dev/null 2>&1 &
 # Wait that mysql was up
-until mysql
+#until mysql
 do
 	echo "NO_UP"
 done
@@ -14,3 +14,8 @@ echo "update mysql.user set plugin='mysql_native_password' where user='root';" |
 echo "DROP DATABASE test" | mysql -u root --skip-password
 echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
 mysql wordpress -u root --password=  < wordpress.sql
+
+sed -i 's/skip-networking/#skip-networking/g' /etc/my.cnf.d/mariadb-server.cnf
+telegraf &
+/usr/bin/mysql_install_db --user=mysql --datadir="/var/lib/mysql"
+/usr/bin/mysqld_safe --datadir="/var/lib/mysql"

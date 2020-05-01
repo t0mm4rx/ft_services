@@ -1,7 +1,4 @@
-  # FROM Image : alpine
 FROM alpine:latest
-
-# VOLUME /var/run/docker.sock:/var/run/docker.sock
 
 RUN apk add telegraf --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
@@ -13,16 +10,16 @@ RUN apk update \
 # Copy initialisation script
 COPY ./init_docker.sh .
 COPY ./init_mysql.sh .
-COPY wp.sql .
+COPY wordpress.sql .
 
 # Add permission
-RUN chmod 777 init_docker.sh
-RUN chmod 777 init_mysql.sh
+RUN chmod +x init_docker.sh
+RUN chmod +x init_mysql.sh
 
 RUN mkdir -p /etc/telegraf
 COPY ./telegraf.conf /etc/telegraf/telegraf.conf
 
+COPY start.sh /start.sh
+RUN chmod +x start.sh
 EXPOSE 3306
-
-# Start configuration script
-ENTRYPOINT [ "./init_docker.sh" ]
+CMD ./init_docker.sh

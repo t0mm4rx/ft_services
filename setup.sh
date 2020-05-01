@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# This script setup minikube, builds Docker images, and create pods
+
 echo "Starting minikube..."
 minikube --vm-driver=virtualbox start --extra-config=apiserver.service-node-port-range=1-35000
 echo "Enabling addons..."
@@ -27,4 +29,5 @@ docker build -t service_grafana ./srcs/grafana
 echo "Creating pods and services..."
 kubectl create -f ./srcs/
 
+echo "Opening the network in your browser"
 open http://$IP
