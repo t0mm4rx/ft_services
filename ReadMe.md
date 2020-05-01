@@ -4,22 +4,22 @@
 
 ## Introduction (will save you some time !)
 
-### What are Docker and Kubernetes
+### What are Docker and Kubernetes 🐳
 
 Docker is a software that allow users to run lightweight virtual machines. You can build Docker "containers" with a Dockerfile. A container is a single virtual machine, with its own memory space and storage. It is created on an image, which is a template with preconfigured softwares.
 
 If you're running big apps that needs lot of containers/services, such as a database, web servers, monitoring tools, ftp, ssh..., you'll need a way to properly manage multiple Docker containers. It's not an easy task: you need to restart automatically crashed containers, to share data between them, to make sure some are fetchable from outside and some not... That's what Kubernetes does.
 
 In Kubernetes, you have:
-- Deployment: an object that is N instances of a given Docker image. For example, you can have a deployment that will launch and manage 10 Apache servers.
-- Service: an object that links a deployment to the outside. For exemple, a deployment that will link the IP 192.168.0.1 to the 10 Apache server and pick the one that have the less work load.
-- Pod: A pod is a running instance of a deployment, you can run a shell into it. It has its own IP, its memory space...
+- Deployment: **an object that runs and manages N instances of a given Docker image**. For example, you can have a deployment that will launch and manage 10 Apache servers.
+- Service: **an object that links a deployment to the outside or to other containers**. For exemple, a deployment that will link the IP 192.168.0.1 to the 10 Apache server and pick the one that have the less work load.
+- Pod: **A pod is a running instance of a deployment**, you can run a shell into it. It has its own IP, its memory space...
 
-All the above objects are described in YAML files.
+All the above objects are described in **YAML files**.
 
 Minikube is the software we use to create a virtual machine that runs Kubernetes, and make sure it works well with VirtualBox. It has also features such as a dashboard to see how are your pods going.
 
-### Docker basics command
+### Docker basics command ✅
 
 ```sh
 # Build a docker image from a Dockerfile
@@ -38,7 +38,7 @@ docker images
 docker system prune
 ```
 
-### How to manage pods with Kubernetes
+### How to manage pods with Kubernetes ✅
 
 ```sh
 # Create a pod from a YAML file
@@ -67,14 +67,13 @@ minikube dashboard
 minikube ip
 ```
 
-### How IP are managed with Kubernetes
+### How IP are managed with Kubernetes 🤖
 
-Kubernetes will create a network that connects all:w
-your containers. Each container will have its own private IP address.
+**Kubernetes will create a network that connects all your containers**. Each container will have its own private IP address. **The network has an external IP**. You can get it with "minikube ip".
 Sometimes, you want a container to connect an other. For exemple if you have a website in a container that needs a database from an other container.
 To achieve that, you need to create a service, which will create an easy-access to the container.
 
-From inside your Kubernetes network (from container to an other container), you can access a service by its name, and not its IP.
+**From inside your Kubernetes network (from container to an other container), you can access a service by its name, and not its IP.**
 For exemple, you have a service "mysql" linked to a MySQL container. To access this container from a Nginx container, you can try:
 ```sh
 mysql <database> -u <user> -p -h mysql
@@ -89,7 +88,7 @@ curl http://test:1000
 curl http://192.168.0.1:1000
 ```
 
-## Containers
+## Containers 🧑‍💻
 
 ### Nginx
 Nginx is a web server that can provide web pages and execute PHP (a language for web backend). You need to create a simple Nginx server, it has to be fetchable through Ingres, which is a more advanced version of Service. Port 443 is for SSL connection (https). You can create a SSL certificate with openssl.
@@ -136,10 +135,11 @@ So there are two connections to configure, Telegraf to InfluxDB which is done in
 
 To provide an already-configured version of Grafana, I advise you to setup a blank Grafana setup, launch you container, configure everything. Then save the grafana.db file on your computer (you can use "kubectl cp" to get data from a running pod). You can now copy this file in your Dockerfile.
 
-## Useful resources
+## Useful resources 🕸
 - To build Grafana + InfluxDB + Telegraf stack: https://medium.com/@nnilesh7756/copy-directories-and-files-to-and-from-kubernetes-container-pod-19612fa74660
 - Kubernetes cheat sheet: https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/
-## Questions ?
+
+## Questions ? 📪
 Tom Marx
-tmarx on the intra and slack :)
+**tmarx** on the intra and slack :)
 
