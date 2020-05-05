@@ -8,18 +8,18 @@
 
 ### What are Docker and Kubernetes 🐳
 
-Docker is a software that allow users to run lightweight virtual machines. You can build Docker "containers" with a Dockerfile. A container is a single virtual machine, with its own memory space and storage. It is created on an image, which is a template with preconfigured softwares.
+Docker is a software that allow users to run lightweight virtual machines. You can build Docker "containers" with a Dockerfile. A container is a single virtual machine, with its own memory space and storage. It is created on an image, which is a template with preconfigured software.
 
-If you're running big apps that needs lot of containers/services, such as a database, web servers, monitoring tools, ftp, ssh..., you'll need a way to properly manage multiple Docker containers. It's not an easy task: you need to restart automatically crashed containers, to share data between them, to make sure some are fetchable from outside and some not... That's what Kubernetes does.
+If you're running big apps that needs lot of containers/services, such as a database, web servers, monitoring tools, ftp, ssh..., you'll need a way to properly manage multiple Docker containers. It's not an easy task; you need to restart automatically crashed containers, to share data between them, to make sure some are fetchable from outside and some not... That's what Kubernetes does.
 
 In Kubernetes, you have:
-- Deployment: **an object that runs and manages N instances of a given Docker image**. For example, you can have a deployment that will launch and manage 10 Apache servers.
-- Service: **an object that links a deployment to the outside or to other containers**. For exemple, a deployment that will link the IP 192.168.0.1 to the 10 Apache server and pick the one that have the less work load.
-- Pod: **A pod is a running instance of a deployment**, you can run a shell into it. It has its own IP, its memory space...
+- **Deployment**: an object that runs and manages N instances of a given Docker image. For example, you can have a deployment that will launch and manage 10 Apache servers.
+- **Service**: an object that links a deployment externally or to other containers. For exemple, a deployment that will link the IP 192.168.0.1 to the 10 Apache servers and pick the one that has the least work load.
+- **Pod**: A pod is a running instance of a deployment, you can run a shell into it. It has its own IP and its own memory space.
 
 All the above objects are described in **YAML files**.
 
-Minikube is the software we use to create a virtual machine that runs Kubernetes, and make sure it works well with VirtualBox. It has also features such as a dashboard to see how are your pods going.
+Minikube is the software that we use to create a virtual machine that runs Kubernetes, and insures compatibility with VirtualBox. It features many tools, such as a dashboard to see how are you'r pods going.
 
 ### Docker basics command ✅
 
@@ -75,11 +75,10 @@ minikube dashboard
 minikube ip
 ```
 
-### How IP are managed with Kubernetes 🤖
+### How IPs are managed with Kubernetes 🤖
 
 **Kubernetes will create a network that connects all your containers**. Each container will have its own private IP address. **The network has an external IP**. You can get it with "minikube ip".
-Sometimes, you want a container to connect an other. For exemple if you have a website in a container that needs a database from an other container.
-To achieve that, you need to create a service, which will create an easy-access to the container.
+Sometimes, you want a container to connect another. For exemple, if you have a website in a container that needs a database from an other container, you need to create a service, which will create an easy-access to the database container.
 
 **From inside your Kubernetes network (from container to an other container), you can access a service by its name, and not its IP.**
 For exemple, you have a service "mysql" linked to a MySQL container. To access this container from a Nginx container, you can try:
@@ -107,20 +106,20 @@ You can test in which context you are by running:
 ```sh
 docker images
 ```
-You'll see every images, that can help you identify were you are.
+You can see all images linked to the current context that can help you identify were you are.
 
-**By default, Kubernetes deployments looks for online Docker images, we want it to load our custom local images**.
+**By default, Kubernetes deployment looks for online Docker images, but we want it to load our custom local images**.
 You can do that by adding "imagePullPolicy: Never" prop in your container object.
 
 ## Containers 🧑‍💻
 
 ### Nginx
-Nginx is a web server that can provide web pages and execute PHP (a language for web backend). You need to create a simple Nginx server, it has to be fetchable through Ingres, which is a more advanced version of Service. Port 443 is for SSL connection (https). You can create a SSL certificate with openssl.
-This container need to provide a SSH connection. SSH is a tool to access a computer remotly (usually without graphics part).
-A really simple way to create a SSH server is though the openssh package and then run the sshd deamon.
+Nginx is a web server that can provide web pages and execute PHP (a language for web backend). You need to create a simple Nginx server, it has to be fetchable through Ingres, which is a more advanced version of service. Port 443 is for SSL connection (https). You can create a SSL certificate with Openssl.
+This container needs to provide a SSH connection. SSH is used to access a computer remotly through a shell.
+A really simple way to create a SSH server is through the openssh package and then run the sshd daemon.
 
-### FTPS
-A simple FTPs server. FTP is a protocole to send and download files from a distant computer. FTPs is a version that uses SSL to encrypt communications between the client and the server, which is safer. Pure-FTPD is a simple FTP server.
+### FTPs
+A simple FTPs server. FTP is a protocol to send and download files from a distant computer. FTPs is a version that uses SSL to encrypt communications between the client and the server, which is safer. Pure-FTPD is a simple FTP server.
 You can test a FTP connection with:
 ```sh
 ftp <user>@<ip>
@@ -128,8 +127,8 @@ ftp <user>@<ip>
 
 ### Wordpress
 Wordpress is the #1 open source website and blog content manager. It's written in PHP, and uses MySQL as database. MySQL is the most used SQL database, SQL is a language to query data.
-You'll need to use a web server, you can reuse nginx.
-Your wordpress database (you'll need to import it in MySQL) contains informations about the IP of the website, it has to match the IP you'll access it. So you'll need to put the minikube IP to wordpress SQL database. Wordpress has also a wp-config.php file that you'll need to edit so it can access your MySQL service.
+You'll need to use a web server, you can reuse Nginx.
+Your wordpress database (you'll need to import it in MySQL) contains the website IP information, which has to match the IP you access it from. You'll need to input the Minikube IP to the wordpress SQL database. Wordpress also has a wp-config.php file that you'll need to edit so it can access your MySQL service.
 
 You can test a remote MySQL connection with:
 ```sh
@@ -138,10 +137,10 @@ mysql <database name> -u <user> -p -h <ip>
 ```
 
 ### PHPMyAdmin
-PHPMyAdmin is a useful tool to see, query, edit data from a MySQL database. It can be hosted by any web server, so I recommand you to use nginx as well as you've used it before. You need to edit phpmyadmin.inc.php file to connect to your MySQL service.
+PHPMyAdmin is a useful tool to view, query, and edit data from a MySQL database. It can be hosted by any web server, so I recommand you to use Nginx as well as you've used it before. You need to edit phpmyadmin.inc.php file to connect to your MySQL service.
 
 ### Grafana
-Grafana is a web dashboard used to visualize data, like cluster health. It can fetch automatically data from various sources, but we'll use InfluxDB, which is a database engine.
+Grafana is a web dashboard used to visualize data, like a cluster health. It can automatically fetch data from various sources, but we'll use InfluxDB, which is a database engine.
 
 You can test an InfluxDB connection by fecthing /ping endpoint:
 ```sh
@@ -149,7 +148,7 @@ curl http://influxdb:8086/ping
 curl http://192.168.0.29/ping
 ```
 
-We'll send every container data (CPU usage, memory, processes) easily by using Telegraf. It's a simple program that sends system data to an InfluxDB instance.
+We'll send all container data (CPU usage, memory, processes) easily by using Telegraf. It's a simple program that sends system data to an InfluxDB instance.
 
 So our stack is:
 Telegraf --> InfluxDB --> Grafana
@@ -163,13 +162,13 @@ To provide an already-configured version of Grafana, I advise you to setup a bla
 - To build Grafana + InfluxDB + Telegraf stack: https://medium.com/@nnilesh7756/copy-directories-and-files-to-and-from-kubernetes-container-pod-19612fa74660
 - Kubernetes cheat sheet: https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/
 
-## Questions ? 📪
+## Questions ? Suggestions ? 📪
 Tom Marx
 **tmarx** on the intra and slack :)
 
 ## To Do 🎯
 - [ ] FTP welcome message
-- [ ] Add login in telegraf.conf files
+- [x] Add login in telegraf.conf files
 - [ ] MySQL two files, better understanding and cleanup
 - [ ] JS animation, link to website in Nginx homepage
-- [ ] Persistancy
+- [ ] Persistency
