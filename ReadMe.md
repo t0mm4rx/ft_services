@@ -8,7 +8,8 @@
 
 ### What are Docker and Kubernetes 🐳
 
-Docker is a software that allow users to run lightweight virtual machines. You can build Docker "containers" with a Dockerfile. A container is a single virtual machine, with its own memory space and storage. It is created on an image, which is a template with preconfigured software.
+Docker is a software that allow users to run lightweight virtual machines. You can build Docker "containers" with a Dockerfile. A container is a single lightweight virtual machine running an os, with its own memory space and storage. It is created on an image, which is a template with preconfigured software.
+A container differs from a virtual machine because it uses the same kernel as the host computer, whereas a virtual machine has its own kernel. Containers are faster and lighter.
 
 If you're running big apps that needs lot of containers/services, such as a database, web servers, monitoring tools, ftp, ssh..., you'll need a way to properly manage multiple Docker containers. It's not an easy task; you need to restart automatically crashed containers, to share data between them, to make sure some are fetchable from outside and some not... That's what Kubernetes does.
 
@@ -68,11 +69,17 @@ kubectl cp <pod name>:<file> <to>
 # or vice versa
 kubectl cp <from> <pod name>:<to>
 
+# Restart a deployment
+kubectl rollout restart deployment <name>
+
 # Launch minikube dashboard
 minikube dashboard
 
 # Get cluster external IP
 minikube ip
+
+# Reset Minikube VM
+minikube delete
 ```
 
 ### How IPs are managed with Kubernetes 🤖
@@ -170,5 +177,5 @@ Tom Marx
 - [ ] FTP welcome message
 - [x] Add login in telegraf.conf files
 - [ ] MySQL two files, better understanding and cleanup
-- [ ] JS animation, link to website in Nginx homepage
-- [ ] Persistency
+- [x] JS animation, link to website in Nginx homepage
+- [x] Persistency

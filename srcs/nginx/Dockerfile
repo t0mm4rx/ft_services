@@ -20,6 +20,7 @@ RUN mkdir -p /run/nginx
 # Nginx config file and webpage
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY index.html /www/index.html
+COPY script.js /www/script.js
 
 # We create SSH user and SSL key
 RUN adduser -D user
