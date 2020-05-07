@@ -3,7 +3,8 @@
 # This script setup minikube, builds Docker images, and create pods
 
 echo "Starting minikube..."
-minikube --vm-driver=virtualbox start --extra-config=apiserver.service-node-port-range=1-35000
+#minikube --vm-driver=virtualbox start --extra-config=apiserver.service-node-port-range=1-35000
+minikube --vm-driver=docker start --extra-config=apiserver.service-node-port-range=1-35000
 echo "Enabling addons..."
 minikube addons enable ingress
 minikube addons enable dashboard
@@ -13,7 +14,8 @@ minikube dashboard &
 echo "Eval..."
 eval $(minikube docker-env)
 
-IP=$(minikube ip)
+#IP=$(minikube ip)
+IP=$(kubectl get node -o=custom-columns='DATA:status.addresses[0].address' | sed -n 2p)
 printf "Minikube IP: ${IP}"
 
 echo "Building images..."
